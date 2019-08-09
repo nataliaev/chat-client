@@ -11,7 +11,10 @@ export default class MessageForm extends React.Component {
   onSubmit = async event => {
     event.preventDefault();
 
-    await superagent.post("http://localhost:5000/message").send({
+    const serverUrl =
+      "https://radiant-bastion-91678.herokuapp.com/message" ||
+      "http://localhost:5000/message";
+    await superagent.post(serverUrl).send({
       message: this.state.message,
       user: this.props.user
     });

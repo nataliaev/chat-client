@@ -5,8 +5,12 @@ import MessageForm from "../src/components/MessageForm";
 import UserForm from "./components/UserForm";
 import "./App.css";
 
+const serverUrl =
+  "https://radiant-bastion-91678.herokuapp.com/stream" ||
+  "http://localhost:5000/stream";
+
 class App extends React.Component {
-  source = new EventSource("http://localhost:5000/stream");
+  source = new EventSource(serverUrl);
 
   componentDidMount() {
     this.source.onmessage = event => {
@@ -17,18 +21,16 @@ class App extends React.Component {
   }
 
   render() {
-    const messages = 
-      this
-      .props
-      .messages
-      .map((message, index) => (
-      <p key={index}>{message.user}: {message.text}</p>
+    const messages = this.props.messages.map((message, index) => (
+      <p key={index}>
+        {message.user}: {message.text}
+      </p>
     ));
 
     return (
       <main>
-        <UserForm user={this.props.user}/>
-        <MessageForm user={this.props.user}/>
+        <UserForm user={this.props.user} />
+        <MessageForm user={this.props.user} />
         <div className="messages">
           <h3>Messages:</h3>
           {messages}
