@@ -1,5 +1,7 @@
 import React from "react";
 import superagent from "superagent";
+import View from './view'
+import './MessageForm.css'
 
 export default class MessageForm extends React.Component {
   state = {
@@ -22,27 +24,6 @@ export default class MessageForm extends React.Component {
   };
 
   render() {
-    return (
-      <div>
-        <form onSubmit={this.onSubmit}>
-          <h3>New message</h3>
-          {/* <input
-            type="text"
-            onChange={this.onChange}
-            value={this.state.name}
-            name="name"
-            placeholder="name"
-          /> */}
-          <input
-            type="text"
-            onChange={this.onChange}
-            value={this.state.message}
-            name="message"
-            placeholder="message"
-          />
-          <button type="submit">Send</button>
-        </form>
-      </div>
-    );
+    return <View onSubmit={this.onSubmit} onChange={this.onChange} value={this.state.message}/>
   }
 }
