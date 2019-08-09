@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { allMessages } from "./actions";
+import { connect } from "react-redux";
+import MessageForm from '../src/components/MessageForm'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  source = new EventSource("http://localhost:5000/stream");
+
+  componentDidMount() {
+    this.source.onmessage = event => {
+      const messages = JSON.parse(event.data);
+
+      this.props.allMessages(messages);
+    };
+  }
+
+  render() {
+    const messages = this.props.messages.map((message, index) => (
+      <p key={index}>{message.text}</p>
+    ));
+
+    return (
+      <main>
+        <MessageForm/>
+        {messages}
+      </main>
+    );
+  }
 }
 
-export default App;
+function MapStateToProps(state) {
+  return {
+    messages: state.messages
+  };
+}
+
+export default connect(
+  MapStateToProps,
+  { allMessages }
+)(App);
