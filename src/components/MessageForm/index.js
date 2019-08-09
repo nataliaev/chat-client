@@ -1,7 +1,7 @@
 import React from "react";
 import superagent from "superagent";
-import View from './view'
-import './MessageForm.css'
+import View from "./view";
+import "./MessageForm.css";
 
 export default class MessageForm extends React.Component {
   state = {
@@ -11,9 +11,10 @@ export default class MessageForm extends React.Component {
   onSubmit = async event => {
     event.preventDefault();
 
-    const message = this.state.message;
-
-    await superagent.post("http://localhost:5000/message").send({ message });
+    await superagent.post("http://localhost:5000/message").send({
+      message: this.state.message,
+      user: this.props.user
+    });
 
     this.setState({ message: "" });
   };
@@ -24,6 +25,12 @@ export default class MessageForm extends React.Component {
   };
 
   render() {
-    return <View onSubmit={this.onSubmit} onChange={this.onChange} value={this.state.message}/>
+    return (
+      <View
+        onSubmit={this.onSubmit}
+        onChange={this.onChange}
+        value={this.state.message}
+      />
+    );
   }
 }

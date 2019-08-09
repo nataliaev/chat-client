@@ -1,7 +1,9 @@
 import React from "react";
 import { allMessages } from "./actions";
 import { connect } from "react-redux";
-import MessageForm from '../src/components/MessageForm'
+import MessageForm from "../src/components/MessageForm";
+import UserForm from "./components/UserForm";
+import "./App.css";
 
 class App extends React.Component {
   source = new EventSource("http://localhost:5000/stream");
@@ -15,14 +17,22 @@ class App extends React.Component {
   }
 
   render() {
-    const messages = this.props.messages.map((message, index) => (
-      <p key={index}>{message.text}</p>
+    const messages = 
+      this
+      .props
+      .messages
+      .map((message, index) => (
+      <p key={index}>{message.user}: {message.text}</p>
     ));
 
     return (
       <main>
-        <MessageForm/>
-        {messages}
+        <UserForm user={this.props.user}/>
+        <MessageForm user={this.props.user}/>
+        <div className="messages">
+          <h3>Messages:</h3>
+          {messages}
+        </div>
       </main>
     );
   }
@@ -30,7 +40,8 @@ class App extends React.Component {
 
 function MapStateToProps(state) {
   return {
-    messages: state.messages
+    messages: state.messages,
+    user: state.user
   };
 }
 
