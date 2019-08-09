@@ -12,7 +12,7 @@ export default class MessageForm extends React.Component {
     event.preventDefault();
 
     const serverUrl =
-      "https://radiant-bastion-91678.herokuapp.com/message" ||
+      //"https://radiant-bastion-91678.herokuapp.com/message" ||
       "http://localhost:5000/message";
     await superagent.post(serverUrl).send({
       message: this.state.message,

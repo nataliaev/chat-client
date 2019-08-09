@@ -1,12 +1,12 @@
 import React from "react";
-import { allMessages } from "./actions";
+import { allChannels } from "./actions";
 import { connect } from "react-redux";
 import MessageForm from "../src/components/MessageForm";
 import UserForm from "./components/UserForm";
 import "./App.css";
 
 const serverUrl =
-  "https://radiant-bastion-91678.herokuapp.com/stream" ||
+  //"https://radiant-bastion-91678.herokuapp.com/stream" ||
   "http://localhost:5000/stream";
 
 class App extends React.Component {
@@ -14,16 +14,16 @@ class App extends React.Component {
 
   componentDidMount() {
     this.source.onmessage = event => {
-      const messages = JSON.parse(event.data);
+      const channels = JSON.parse(event.data);
 
-      this.props.allMessages(messages);
+      this.props.allChannels(channels);
     };
   }
 
   render() {
-    const messages = this.props.messages.map((message, index) => (
+    const channels = this.props.channels.map((channel, index) => (
       <p key={index}>
-        {message.user}: {message.text}
+        {channel.name}
       </p>
     ));
 
@@ -33,7 +33,7 @@ class App extends React.Component {
         <MessageForm user={this.props.user} />
         <div className="messages">
           <h3>Messages:</h3>
-          {messages}
+          {channels}
         </div>
       </main>
     );
@@ -42,12 +42,12 @@ class App extends React.Component {
 
 function MapStateToProps(state) {
   return {
-    messages: state.messages,
+    channels: state.channels,
     user: state.user
   };
 }
 
 export default connect(
   MapStateToProps,
-  { allMessages }
+  { allChannels }
 )(App);
