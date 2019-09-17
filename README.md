@@ -13,7 +13,7 @@
 ## Features
 
 - You are getting stream messages from other users
-- You can post messages to the chat using uor name or anonymosly
+- You can post messages to the chat using your name or anonymosly
 
 ## Installation
 
