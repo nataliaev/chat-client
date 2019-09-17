@@ -6,7 +6,7 @@ import UserForm from "./components/UserForm";
 import "./App.css";
 
 const serverUrl =
-  "https://radiant-bastion-91678.herokuapp.com/stream" ||
+  "https://peaceful-hamlet-02378.herokuapp.com/stream" ||
   "http://localhost:5000/stream";
 
 class App extends React.Component {
